@@ -1,8 +1,17 @@
 # 托业英语跳一跳
 
-主要面向电脑 Chrome：直接打开 **托业英语跳一跳.html**，无需安装或联网加载词库。
-建议长期使用同一个浏览器、同一个文件位置；不同浏览器、文件路径、
-本地服务器地址可能各自使用不同存档。无痕模式和清理浏览器数据可能丢失进度。
+**在线玩**：<https://wanghao3762-cell.github.io/toeic-english-jump/>（GitHub Pages，手机/电脑浏览器直接打开）
+
+**离线玩**：下载 **托业英语跳一跳.html**，双击即用，无需安装或联网加载词库。
+两种方式存档互不相通（在线版存在站点域名下，离线版存在本地）。建议长期固定一种方式；
+不同浏览器、文件路径、本地服务器地址可能各自使用不同存档。无痕模式和清理浏览器数据可能丢失进度。
+
+## 关于仓库
+
+- `index.html` + `app.js` / `learning.js` / `ascent.js` / `memory.js` / `vocabulary.js`：可编辑源码，`tools/build_standalone.py` 把它们内联成单文件。
+- `托业英语跳一跳.html`：构建产物，离线单文件版。
+- `tools/test.js`：49 组回归测试，`node tools/test.js` 运行。
+- 词库源数据 `data/sources/ecdict.csv`（65MB）不入库，按 `data/SOURCES.md` 的官方地址重新下载；NGSL/TSL 为 CC BY-SA 4.0，ECDICT 为 MIT，署名与许可全文见该文件。
 
 ## 当前玩法
 
