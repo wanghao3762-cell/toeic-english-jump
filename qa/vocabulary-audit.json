@@ -1,0 +1,46 @@
+{
+  "total": 4129,
+  "unique": 4129,
+  "counts": {
+    "NGSL": 2809,
+    "TSL": 1250,
+    "NGSL-SUP": 50,
+    "PROJECT": 20
+  },
+  "missingSourceLemmas": {
+    "NGSL": [],
+    "TSL": [],
+    "NGSL-SUP": [],
+    "PROJECT": []
+  },
+  "rankOrSourceMismatch": [],
+  "hashMismatch": [],
+  "missingFields": {
+    "meaning": [],
+    "phonetic": [],
+    "pos": [],
+    "definition": [],
+    "answer": []
+  },
+  "memory": {
+    "curated": 110,
+    "dictionaryOnly": 4019,
+    "scenes": [
+      "cafe",
+      "delivery",
+      "document",
+      "office",
+      "people",
+      "shopping",
+      "time",
+      "travel"
+    ],
+    "brokenLinks": []
+  },
+  "limits": [
+    "Source coverage is not an exhaustive ETS required-word list or score guarantee.",
+    "Nonempty dictionary fields do not prove sense or phonetic accuracy; full human review remains unfinished.",
+    "Source lemmas do not include every inflected form; 20 project additions are explicitly labelled.",
+    "Only the curated subset has original bilingual examples, collocations and shared scene illustrations."
+  ]
+}

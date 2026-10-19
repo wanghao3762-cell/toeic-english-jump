@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "counts": {
+    "NGSL": 2809,
+    "TSL": 1250,
+    "NGSL-SUP": 50,
+    "PROJECT": 20
+  },
+  "supplementRows": 52,
+  "supplementMerged": 2,
+  "stages": {
+    "1": 550,
+    "2": 700,
+    "3": 1609,
+    "4": 670,
+    "5": 600
+  },
+  "missingTranslations": [],
+  "missingFields": {
+    "phonetic": [],
+    "pos": [],
+    "definition": []
+  },
+  "memoryCoverage": 110,
+  "sha256": {
+    "ngsl.csv": "2098bab8955a120a9766c6282a51d7d578c6cb0a7d946600d2ffb73ba25a0b44",
+    "tsl.csv": "2259df25a1077b04067ef0c0e9e4c98b46c91e4d539741dfaceba88651ff486d",
+    "ngsl-supplement.csv": "7bb4c76cbe43ae87240be4ac7ada370b9e1a0d9d631d8c4430138646965d03f6",
+    "ecdict.csv": "1a6947e04785db63613a92e14903cdae7954f7e84860b10e68e5c7cbb3f9c3cf"
+  }
+}

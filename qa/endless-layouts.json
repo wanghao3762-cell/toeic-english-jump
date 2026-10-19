@@ -1,0 +1,62 @@
+[
+  {
+    "height": 568,
+    "inputBottom": 416.40625,
+    "inputTop": 344.40625,
+    "keyboardBottom": 555,
+    "pageHeight": 568,
+    "pageWidth": 320,
+    "stageHeight": 243.40625,
+    "width": 320
+  },
+  {
+    "height": 667,
+    "inputBottom": 506.40625,
+    "inputTop": 432.40625,
+    "keyboardBottom": 654,
+    "pageHeight": 667,
+    "pageWidth": 375,
+    "stageHeight": 323.40625,
+    "width": 375
+  },
+  {
+    "height": 844,
+    "inputBottom": 641.109375,
+    "inputTop": 567.109375,
+    "keyboardBottom": 828,
+    "pageHeight": 844,
+    "pageWidth": 390,
+    "stageHeight": 420.109375,
+    "width": 390
+  },
+  {
+    "height": 768,
+    "inputBottom": 567,
+    "inputTop": 484,
+    "keyboardBottom": 749,
+    "pageHeight": 768,
+    "pageWidth": 820,
+    "stageHeight": 392,
+    "width": 820
+  },
+  {
+    "height": 600,
+    "inputBottom": 446,
+    "inputTop": 367,
+    "keyboardBottom": 588,
+    "pageHeight": 600,
+    "pageWidth": 1024,
+    "stageHeight": 297,
+    "width": 1024
+  },
+  {
+    "height": 390,
+    "inputBottom": 182,
+    "inputTop": 105,
+    "keyboardBottom": 378,
+    "pageHeight": 390,
+    "pageWidth": 844,
+    "stageHeight": 338,
+    "width": 844
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "canvas": {
+      "bottom": 359,
+      "height": 297,
+      "left": 0,
+      "right": 1024,
+      "top": 62,
+      "width": 1024,
+      "x": 0,
+      "y": 62
+    },
+    "height": 600,
+    "keyboardBottom": 588,
+    "pageWidth": 1024,
+    "targets": 1,
+    "width": 1024
+  },
+  {
+    "canvas": {
+      "bottom": 447,
+      "height": 382,
+      "left": 0,
+      "right": 1280,
+      "top": 65,
+      "width": 1280,
+      "x": 0,
+      "y": 65
+    },
+    "height": 720,
+    "keyboardBottom": 706,
+    "pageWidth": 1280,
+    "targets": 1,
+    "width": 1280
+  },
+  {
+    "canvas": {
+      "bottom": 600,
+      "height": 524,
+      "left": 0,
+      "right": 1440,
+      "top": 76,
+      "width": 1440,
+      "x": 0,
+      "y": 76
+    },
+    "height": 900,
+    "keyboardBottom": 881,
+    "pageWidth": 1440,
+    "targets": 1,
+    "width": 1440
+  },
+  {
+    "canvas": {
+      "bottom": 780,
+      "height": 704,
+      "left": 241,
+      "right": 1679,
+      "top": 76,
+      "width": 1438,
+      "x": 241,
+      "y": 76
+    },
+    "height": 1080,
+    "keyboardBottom": 1061,
+    "pageWidth": 1920,
+    "targets": 1,
+    "width": 1920
+  }
+]

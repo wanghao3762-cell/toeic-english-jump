@@ -1,0 +1,30 @@
+[
+  {
+    "buttonBottom": 451.8125,
+    "buttonTop": 414.8125,
+    "height": 568,
+    "menuOverflowX": false,
+    "width": 320
+  },
+  {
+    "buttonBottom": 556.8125,
+    "buttonTop": 519.8125,
+    "height": 667,
+    "menuOverflowX": false,
+    "width": 375
+  },
+  {
+    "buttonBottom": 523.90625,
+    "buttonTop": 481.90625,
+    "height": 600,
+    "menuOverflowX": false,
+    "width": 1024
+  },
+  {
+    "buttonBottom": 313.90625,
+    "buttonTop": 271.90625,
+    "height": 390,
+    "menuOverflowX": false,
+    "width": 844
+  }
+]

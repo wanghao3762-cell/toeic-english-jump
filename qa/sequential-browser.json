@@ -1,0 +1,242 @@
+[
+  {
+    "answer": "work",
+    "height": "1,770",
+    "jumps": "2",
+    "route": "无限 · 第 1 组 · 已完成 2 词 · 本组 2/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "it",
+    "height": "1,828",
+    "jumps": "3",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "office",
+    "height": "1,887",
+    "jumps": "4",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "book",
+    "height": "1,946",
+    "jumps": "5",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "call",
+    "height": "2,005",
+    "jumps": "6",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "read",
+    "height": "2,064",
+    "jumps": "7",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "write",
+    "height": "2,122",
+    "jumps": "8",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 3/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "day",
+    "height": "2,181",
+    "jumps": "9",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 4/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "office",
+    "height": "2,240",
+    "jumps": "10",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 5/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "book",
+    "height": "2,299",
+    "jumps": "11",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 6/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "call",
+    "height": "2,358",
+    "jumps": "12",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 7/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "read",
+    "height": "2,416",
+    "jumps": "13",
+    "route": "无限 · 第 1 组 · 已完成 3 词 · 本组 8/9",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "write",
+    "height": "2,475",
+    "jumps": "14",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "the",
+    "height": "2,534",
+    "jumps": "15",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "be",
+    "height": "2,593",
+    "jumps": "16",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "and",
+    "height": "2,652",
+    "jumps": "17",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "of",
+    "height": "2,710",
+    "jumps": "18",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "to",
+    "height": "2,769",
+    "jumps": "19",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "the",
+    "height": "2,828",
+    "jumps": "20",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 1/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "be",
+    "height": "2,887",
+    "jumps": "21",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 2/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "and",
+    "height": "2,946",
+    "jumps": "22",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 3/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "of",
+    "height": "3,004",
+    "jumps": "23",
+    "route": "无限 · 第 2 组 · 已完成 3 词 · 本组 4/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "to",
+    "height": "3,063",
+    "jumps": "24",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "a",
+    "height": "3,122",
+    "jumps": "25",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "in",
+    "height": "3,181",
+    "jumps": "26",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "have",
+    "height": "3,240",
+    "jumps": "27",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "for",
+    "height": "3,298",
+    "jumps": "28",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "not",
+    "height": "3,357",
+    "jumps": "29",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 0/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "a",
+    "height": "3,416",
+    "jumps": "30",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 1/5",
+    "stageHeight": 382,
+    "targets": 1
+  },
+  {
+    "answer": "in",
+    "height": "3,475",
+    "jumps": "31",
+    "route": "无限 · 第 3 组 · 已完成 3 词 · 本组 2/5",
+    "stageHeight": 382,
+    "targets": 1
+  }
+]

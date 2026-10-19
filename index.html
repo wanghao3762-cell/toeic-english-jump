@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOEIC 跳一跳 · 英语打字闯关</title>
+<style>
+  :root{--ink:#273E36;--paper:#FAF7ED;--moss:#3F7058;--honey:#DCA25F;--coral:#BC6652;--line:#DBDFD0;--muted:#6D8173}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{overflow:hidden;background:#DCE6DC;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;user-select:none;touch-action:manipulation}
+  button,select{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
+  #app{height:100dvh;max-width:1440px;margin:0 auto;display:flex;flex-direction:column;background:var(--paper);box-shadow:0 0 80px #284E4614}
+  #hud{min-height:76px;display:flex;align-items:center;gap:5px;padding:13px 26px;background:var(--paper);border-bottom:1px solid #D5DFCE;z-index:4}
+  .brand{margin-right:28px;white-space:nowrap}.brand small{display:block;font:10px "Trebuchet MS",sans-serif;letter-spacing:.25em;color:#718576;margin-bottom:4px}.brand strong{font:700 22px Georgia,"Microsoft YaHei",serif;letter-spacing:.015em}
+  .stat{padding:0 12px;border-right:1px solid var(--line);font-size:10px;color:var(--muted);white-space:nowrap}.stat b{display:block;font:700 18px/1.3 "Trebuchet MS",sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
+  .stat.combo-active b{color:#B3763A}.stat.combo-active{background:#F4EAD5;border-radius:7px;border-color:transparent}
+  .hud-spacer{flex:1}
+  #storageNotice{flex-shrink:0;padding:7px 16px;background:#F4EAD5;color:#805B35;font-size:11px;border-bottom:1px solid #DCA25F}#storageNotice[hidden]{display:none}
+  .ghost-btn,.primary-btn{border:1px solid #CFD7C9;border-radius:8px;padding:9px 12px;background:#FFFDF5;cursor:pointer;font-size:11px;transition:background .15s,transform .15s}
+  .ghost-btn:hover{background:#EBEFDF}.primary-btn{background:#355E49;border-color:#355E49;color:#FFF9E9;font-weight:700;box-shadow:0 3px 0 #234533}.primary-btn:hover{background:#294E3D;transform:translateY(-1px)}
+  button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #B97F44;outline-offset:3px}
+  #stage{position:relative;flex:1;min-height:300px;overflow:hidden;background:#BFDAD1}
+  #cv{width:100%;height:100%;display:block}
+  .stage-label{position:absolute;bottom:19px;right:26px;z-index:2;color:#426653;font-size:11px;letter-spacing:.07em;pointer-events:none;text-shadow:0 1px #FFF9E9}
+  .ascent-card,.route-card{position:absolute;z-index:2;background:rgba(250,247,237,.92);border:1px solid #FFFFF0;border-radius:3px 17px 17px 17px;box-shadow:0 7px 22px #315C4610;pointer-events:none}
+  .ascent-card{left:24px;top:24px;width:166px;padding:15px 17px 13px}
+  .eyebrow{font:9px "Trebuchet MS","Microsoft YaHei",sans-serif;letter-spacing:.17em;color:#6B8472;text-transform:uppercase}
+  .ascent-card .eyebrow:before{content:"";display:inline-block;height:6px;width:6px;background:#CF9558;border-radius:50%;margin-right:7px;vertical-align:1px}
+  .altitude-number{display:flex;gap:6px;align-items:baseline;margin:5px 0 0}.altitude-number b{font:700 41px/1.1 Georgia,serif;color:#315741;font-variant-numeric:tabular-nums;letter-spacing:-.04em}.altitude-number span{font-size:10px;color:#7A8B75}
+  .ascent-card p{font-size:11px;color:#4A6E53;margin:4px 0}.altitude-track,.route-progress{height:4px;background:#DDE4D2;border-radius:4px;overflow:hidden;margin:12px 0 8px}.altitude-track i,.route-progress i{display:block;height:100%;width:0;background:#C48C50;border-radius:4px;transition:width .25s}
+  .altitude-foot{display:flex;justify-content:space-between;gap:4px;font-size:8px;color:#6A7B65;white-space:nowrap}
+  .route-card{right:24px;top:24px;width:209px;padding:15px 17px;border-radius:17px 3px 17px 17px}.route-card h2{font-size:16px;font-weight:600;margin:7px 0}.route-card p{font-size:10px;color:#70816F;line-height:1.8}.route-progress{margin:12px 0 0}.route-progress i{background:#5D8760}
+  .ascent-milestone{position:absolute;z-index:3;left:24px;top:202px;max-width:185px;padding:11px 14px;border-left:3px solid #D2A35F;background:rgba(250,247,237,.95);border-radius:0 10px 10px 0;pointer-events:none;animation:arrive .4s ease-out}
+  .ascent-milestone[hidden]{display:none}.ascent-milestone b{font-size:12px;color:#355C46}.ascent-milestone span{display:block;font-size:10px;line-height:1.8;color:#72816A;margin-top:4px}
+  #overlay,#summary{position:fixed;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;padding:24px;background:#D6E2D273;backdrop-filter:blur(5px)}
+  #overlay.hide,#summary.hide{display:none}
+  .menu-card{width:min(790px,100%);max-height:100%;padding:28px 32px;background:#FBF8ED;border:1px solid #FFFDF5;border-radius:18px;box-shadow:0 20px 70px #2B50352B;position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column}
+  .menu-content{min-height:0;overflow-y:auto;padding:1px;scrollbar-width:thin;scrollbar-color:#B3BDA4 transparent}
+  .menu-card .menu-actions{flex-shrink:0;padding-top:12px;margin-top:12px;border-top:1px solid #D9DEC9}.route-disclaimer{flex-shrink:0}
+  .menu-card:before{content:"";position:absolute;inset:8px;border:1px solid #DDE2CF;border-radius:12px;pointer-events:none}
+  .menu-hero{display:flex;gap:12px;align-items:center;position:relative}
+  .menu-title{flex:1;min-width:0}.menu-card .kicker{font:10px "Trebuchet MS",sans-serif;letter-spacing:.22em;color:#708368;text-transform:uppercase}
+  .menu-card h1{font:700 39px/1.25 Georgia,"Microsoft YaHei",serif;letter-spacing:-.03em;margin:12px 0 14px;color:#315440}.menu-card h1 span{display:block;color:#B67B4B}
+  .menu-card p{font-size:11px;line-height:1.9;color:#71816C;overflow-wrap:anywhere}
+  .menu-illustration{width:178px;flex:none;align-self:stretch;display:flex;align-items:center}.menu-illustration svg{width:100%;height:auto}
+  .how{display:flex;gap:18px;margin:20px 0 18px}.how div{flex:1;min-width:0;border-top:1px solid #D9DEC9;padding-top:10px}.how b{display:block;font-size:12px;color:#536B4E;margin-bottom:5px}.how span{font-size:10px;color:#849078;line-height:1.7}
+  .level-picker{display:flex;gap:7px;margin:15px 0 12px}.level-choice{flex:1;min-width:0;border:1px solid #DADFCF;border-radius:9px;background:#FFFCF3;padding:10px 8px;text-align:left;cursor:pointer}.level-choice b{display:block;font:700 12px/1.5 "Trebuchet MS","Microsoft YaHei",sans-serif;white-space:nowrap}.level-choice small{display:block;margin-top:5px;font-size:9px;color:#86917D}.level-choice.selected{background:#E4ECD9;border-color:#648360;box-shadow:inset 0 0 0 1px #648360}.level-choice:hover{background:#EDF0DF}
+  #menuLevelNote{font-size:10px}#menuStatus{margin:5px 0 14px;color:#597250}
+  .menu-settings{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 20px;font-size:10px;color:#71816C}
+  select{border:1px solid #D8DFCE;border-radius:6px;background:#F4F5E9;padding:6px 24px 6px 9px;font-size:11px;max-width:100%;min-width:0;cursor:pointer;accent-color:#426A4E}
+  .menu-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.menu-actions .primary-btn{padding:12px 24px;font-size:12px}.menu-actions #bReset{margin-left:auto;border:0;background:transparent;color:#949B89;font-size:10px;padding:8px 0}
+  #summary{z-index:12}.summary-card{width:min(510px,100%);max-height:100%;overflow-y:auto;padding:24px;background:var(--paper);border:1px solid #FFFFF3;border-radius:17px;box-shadow:0 16px 60px #2A4D3530;text-align:center}
+  .summary-card:before{content:"A LITTLE HIGHER, EVERY DAY";display:block;letter-spacing:.15em;font:9px "Trebuchet MS",sans-serif;color:#8B967D;margin-bottom:12px}.summary-card h2{font-size:24px;color:#3D6046}.summary-card .sub{font-size:11px;color:#829078;line-height:1.7;margin:8px 0 18px}
+  .summary-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:16px}.summary-stats div{padding:12px 4px;background:#EEF0DF;border-radius:8px}.summary-stats b{display:block;font:700 19px "Trebuchet MS",sans-serif;color:#426448;overflow-wrap:anywhere}.summary-stats span{display:block;font-size:9px;color:#88937D;margin-top:4px}.summary-actions{position:sticky;bottom:-1px;display:flex;justify-content:center;gap:8px;background:var(--paper);padding-top:8px}
+  #workbench{position:relative;z-index:4;background:var(--paper);border-top:1px solid #D3DCC9;padding:15px 26px 14px}
+  .prompt-line{display:flex;align-items:center;gap:22px;min-height:46px}
+  .prompt-copy{flex:1;min-width:0}.prompt-copy .label{font:9px "Trebuchet MS",sans-serif;color:#8B977D;letter-spacing:.17em}.prompt-copy strong{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:3px 0}.prompt-copy em{font:10px "Trebuchet MS","Microsoft YaHei",sans-serif;color:#8A957E;font-style:normal}
+  .input-track{display:flex;align-items:center;gap:5px;min-height:43px;flex:1.2;border:1px solid #D9DFCA;border-radius:9px;padding:8px 12px;background:#FFFEF6;overflow-x:auto;min-width:0;box-shadow:0 2px 5px #315C4604}
+  .input-track:before{content:"›";font:24px Georgia,serif;color:#A0AF89;margin-right:4px}
+  .typed-char{flex-shrink:0;min-width:22px;height:25px;border-radius:4px;background:#E5EDDC;color:#416B4C;font:700 16px/25px "Trebuchet MS",sans-serif;text-align:center}.typed-char.bad{background:#F5E1D8;color:var(--coral)}.placeholder{font-size:11px;color:#A0AA93;white-space:nowrap}
+  .input-tip{font-size:10px;color:#849277;text-align:right;min-width:145px;max-width:260px;line-height:1.7}.input-tip strong{color:var(--ink)}.input-tip.bad{color:var(--coral)}
+  .practice-tools{margin:11px 0 0;display:flex;align-items:center;gap:8px;font-size:10px;color:#819174;flex-wrap:wrap}.practice-tools select{padding:5px 20px 5px 8px;font-size:10px;background:#EEF1E2}.practice-tools .ghost-btn{font-size:10px;padding:6px 10px;background:transparent;border-color:#D7DECC}.practice-tools a{margin-left:auto;color:#849175;font-size:9px;text-decoration:none;border-bottom:1px solid #C3CDB5}
+  #targetSelect{max-width:220px}
+  #kb{margin:13px auto 0;max-width:780px}.key-row{display:flex;gap:6px;margin-bottom:5px}.key{height:32px;min-width:0;flex:1;border:1px solid #D5DCC8;border-radius:6px;background:#FFFEF6;box-shadow:0 2px 0 #D9DEC9;cursor:pointer;font:600 12px "Trebuchet MS",sans-serif;color:#687D5D}.key:active,.key.hit{transform:translateY(2px);box-shadow:none;background:#DCE8CF;border-color:#819C70;color:#42683C}.key.err{background:#F5D7D0;border-color:var(--coral);color:#A34B43}.key.wide{flex:1.5;font:10px "Microsoft YaHei",sans-serif}.key-row:nth-child(2){padding:0 3%}.key-row:nth-child(3){padding:0 7%}
+  @keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @media(min-width:1441px){#app{border-left:1px solid #C9D8C6;border-right:1px solid #C9D8C6}}
+  @media(max-width:1100px){#hud{padding:12px 18px;gap:3px}.brand{margin-right:10px}.brand strong{font-size:18px}.stat{padding:0 8px}.stat b{font-size:16px}.ghost-btn{padding:8px;font-size:10px}}
+  @media(max-width:760px){
+    body{overflow-y:auto}#hud{padding:9px 12px;gap:5px;flex-wrap:wrap;min-height:64px}.brand{display:none}.stat{padding:0 6px;font-size:8px}.stat b{display:inline;font-size:12px;margin-left:4px}.hud-spacer{display:none}#hud .ghost-btn{font-size:9px;padding:5px 8px}
+    #stage{min-height:320px}.ascent-card{left:12px;top:13px;width:124px;padding:10px 12px}.altitude-number b{font-size:30px}.altitude-number{margin-top:3px}.ascent-card .eyebrow,.route-card .eyebrow{font-size:8px;letter-spacing:.09em}.ascent-card p{font-size:10px}.altitude-track{margin:7px 0}.altitude-foot{font-size:7px;gap:2px}
+    .route-card{right:12px;top:13px;width:146px;padding:12px}.route-card h2{font-size:12px;margin:7px 0}.route-card p{display:none}.route-progress{margin-top:9px}.ascent-milestone{display:none}.stage-label{font-size:8px;right:12px;bottom:12px;letter-spacing:0}
+    #workbench{padding:11px 12px 12px}.prompt-line{flex-wrap:wrap;gap:8px;min-height:0}.prompt-copy{flex-basis:45%}.prompt-copy strong{font-size:13px}.prompt-copy em{font-size:9px}.prompt-copy .label{font-size:8px}.input-track{flex-basis:45%;padding:6px 8px;min-height:40px}.placeholder{font-size:9px}.input-tip{flex-basis:100%;max-width:100%;min-width:0;font-size:9px;text-align:left;max-height:30px;overflow:hidden}
+    .practice-tools{margin-top:7px;gap:5px;font-size:9px}.practice-tools select{font-size:9px;padding:5px 2px 5px 5px}.practice-tools .ghost-btn{font-size:9px;padding:6px 7px}#targetSelect{max-width:107px}.practice-tools a{margin-left:0;font-size:8px}#kb{margin-top:10px}.key-row{gap:3px;margin-bottom:4px}.key{height:31px;font-size:11px}.key.wide{font-size:9px}.key-row:nth-child(2),.key-row:nth-child(3){padding:0}
+    #overlay,#summary{padding:12px}.menu-card{padding:20px 18px}.menu-card h1{font-size:29px;margin:10px 0}.menu-illustration{width:90px;align-self:center}.menu-card .kicker{font-size:8px;letter-spacing:.1em}.menu-card p{font-size:10px}.how{gap:9px;margin:14px 0}.how b{font-size:10px}.how span{font-size:9px}.level-picker{gap:5px;flex-wrap:wrap;margin:12px 0}.level-choice{flex:1 0 28%;padding:7px 8px}.level-choice b{font-size:10px}.level-choice small{font-size:8px;margin-top:3px}.menu-settings{gap:5px;margin-bottom:16px}.menu-settings select{font-size:10px;padding:6px 4px}.menu-actions{gap:7px}.menu-actions .primary-btn{font-size:11px;padding:10px 15px}.menu-actions #bReset{font-size:8px}#menuStatus{margin-bottom:9px}
+    .summary-card{padding:20px 16px}.summary-card h2{font-size:21px}.summary-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.summary-stats div{padding:9px 4px}.summary-stats b{font-size:17px}
+  }
+  @media(max-height:760px){#hud{min-height:62px;padding-top:8px;padding-bottom:8px}#workbench{padding-top:9px;padding-bottom:9px}.key{height:28px}#kb{margin-top:9px}.menu-card{padding-top:20px;padding-bottom:20px}.menu-card h1{font-size:32px}.how{margin:13px 0}.level-picker{margin:10px 0}.menu-settings{margin-bottom:12px}}
+  @media(max-width:760px) and (max-height:760px){#stage{min-height:305px}.key{height:27px}.menu-card h1{font-size:26px}.menu-illustration{width:72px}.menu-actions #bReset{margin-left:0}.menu-card{padding:16px}.how span{font-size:8px}.how{gap:8px}}
+  @media(max-width:760px){.ascent-card .altitude-track{display:none}.ascent-card p{margin:2px 0}.altitude-foot{margin-top:7px}}
+  @media(max-width:760px){#overlay,#summary{position:fixed;z-index:20;padding:12px}.menu-card{width:min(480px,100%)}}
+  @media(max-height:540px){body{overflow-y:auto}#app{height:auto;min-height:700px}#stage{height:350px;flex:none}}
+  @media(max-width:360px) and (max-height:640px){
+    #stage{min-height:255px}.prompt-copy em{display:none}.practice-tools label,.practice-tools a{display:none}.practice-tools{gap:4px}#targetSelect{max-width:100px}.practice-tools .ghost-btn{padding:5px 6px}#kb{margin-top:7px}.key{height:25px}
+  }
+  @media(min-width:640px) and (max-height:540px){
+    body{overflow:hidden}#app{height:100dvh;min-height:0;display:grid;grid-template-columns:minmax(280px,1fr) 350px;grid-template-rows:52px minmax(0,1fr)}
+    #hud{grid-column:1/-1;min-height:0;padding:6px 12px}.brand{margin-right:10px}.brand strong{font-size:16px}.brand small{font-size:8px}.stat{padding:0 7px}.stat b{font-size:13px}#hud .ghost-btn{padding:6px 8px;font-size:9px}
+    #stage{height:auto;min-height:0;grid-column:1;grid-row:2}.ascent-card{left:10px;top:10px;width:116px;padding:9px 10px}.altitude-number b{font-size:29px}.ascent-card .eyebrow{font-size:8px}.ascent-card p{font-size:10px;margin:2px 0}.altitude-foot{font-size:7px;margin-top:6px}.ascent-card .altitude-track{display:none}
+    .route-card{right:10px;top:10px;width:135px;padding:11px}.route-card h2{font-size:12px}.route-card p{display:none}.route-card .eyebrow{font-size:8px}.route-progress{margin-top:8px}.ascent-milestone,.stage-label{display:none}
+    #workbench{grid-column:2;grid-row:2;border-top:0;border-left:1px solid #D3DCC9;padding:12px;display:flex;flex-direction:column;min-height:0}.prompt-line{flex-wrap:wrap;gap:6px}.prompt-copy,.input-track,.input-tip{flex-basis:100%}.prompt-copy strong{font-size:13px}.prompt-copy em{font-size:9px}.input-track{min-height:35px;padding:5px 8px}.input-tip{font-size:9px;min-width:0;max-width:100%;text-align:left}.practice-tools{gap:5px;margin-top:8px}.practice-tools select{font-size:9px;padding:4px}#targetSelect{max-width:100px}.practice-tools .ghost-btn{padding:5px 7px}.practice-tools a{display:none}#kb{width:100%;margin-top:auto;padding-top:8px}.key{height:26px;font-size:10px}.key-row{gap:3px;margin-bottom:4px}.key-row:nth-child(2),.key-row:nth-child(3){padding:0}
+    #storageNotice:not([hidden]){position:fixed;left:0;right:0;bottom:0;z-index:30}
+  }
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  /* Input is the primary interaction, with persistent character-level feedback. */
+  .typing-panel{flex:1.2;min-width:0;position:relative;padding:8px 10px;background:#FFFEF6;border:2px solid #BDCBB0;border-radius:11px;box-shadow:0 3px 0 #E3E8D6;cursor:text}
+  .typing-panel:focus-within,.typing-panel.typing{border-color:#5D9064;box-shadow:0 0 0 3px #5D90641A}
+  .typing-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:10px;color:#688263;margin-bottom:6px}.typing-meta b{font:700 12px "Trebuchet MS",sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .typing-panel .input-track{border:0;border-radius:0;padding:0;min-height:32px;background:transparent;box-shadow:none;gap:4px;scrollbar-width:none}.typing-panel .input-track:before{display:none}
+  .typing-panel .typed-char{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:0 0 26px;min-width:26px;height:31px;border-radius:5px;font:700 19px "Trebuchet MS",sans-serif}
+  .typed-char.remaining{background:#F0F1E6;color:#A1AD95}.typed-char.matched{background:#DCEED6;color:#2D713E;border:1px solid #AED2A7}.typed-char.current{border:2px solid #5F8E59;color:#708366;background:#F6F8EA}.typed-char.current:after{content:"";position:absolute;bottom:3px;left:5px;right:5px;height:2px;background:#527D4C;animation:input-caret 1s steps(2) infinite}
+  .typing-panel .typed-char.bad{background:#F6DDD3;color:#AB4837;border:2px solid #C87B62}.typing-panel.error{border-color:#C87B62;background:#FFF7EF}.typing-panel.error .typing-meta{color:#A4503D}.typing-panel.success{border-color:#4C975B;background:#EDF7E5}.typing-panel.success .typing-meta{color:#327344}
+  .typing-progress{height:4px;border-radius:3px;background:#E7ECDB;margin-top:7px;overflow:hidden}.typing-progress i{display:block;height:100%;width:0;background:#65965B;border-radius:3px;transition:width .12s}.typing-panel.error .typing-progress i{background:#CC8C65}.typing-panel.success .typing-progress i{background:#4A9655}
+  .typing-capture{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:text;z-index:1;font-size:16px}.typing-capture:read-only{cursor:default}
+  #bFinish{border-color:#BD9A60;color:#875B26;background:#F7EAD1}#bFinish[hidden]{display:none}.play-help{font-size:10px;color:#7E8E75;margin-top:7px;line-height:1.7}.play-help strong{color:#507448;font-weight:600}.menu-card .mode-note{margin-bottom:12px;color:#557B4C;font-size:11px}
+  @keyframes input-caret{50%{opacity:0}}
+  @media(max-width:1100px){.score-stat,.jump-stat{display:none}}
+  @media(max-width:760px){.typing-panel{flex-basis:100%;padding:7px 9px}.typing-meta{font-size:9px;margin-bottom:5px}.typing-panel .typed-char{flex-basis:23px;min-width:23px;height:27px;font-size:17px}.typing-panel .input-track{min-height:28px}.typing-progress{margin-top:5px}.prompt-copy{flex-basis:100%}.prompt-copy em{font-size:9px}.input-tip{line-height:1.4}.play-help{font-size:9px}.menu-actions .primary-btn{padding:10px 13px}.menu-actions .ghost-btn{padding:8px 9px;font-size:10px}.menu-actions #bReset{font-size:8px}.menu-card .mode-note{font-size:10px}}
+  @media(max-width:760px) and (max-height:760px){#stage{min-height:250px}.prompt-copy em{display:none}.prompt-copy .label{display:none}.prompt-line{gap:6px}.play-help{display:none}.practice-tools a{display:none}#kb{margin-top:7px}}
+  @media(max-width:360px) and (max-height:640px){#stage{min-height:230px}.typing-meta{font-size:8px}.typing-panel{padding:6px 8px}.typing-panel .typed-char{height:25px}.practice-tools .ghost-btn{padding:4px 5px}.key{height:24px}}
+  @media(min-width:640px) and (max-height:540px){.typing-panel{flex-basis:100%;padding:7px 9px}.typing-meta{font-size:9px}.typing-panel .typed-char{flex-basis:23px;min-width:23px;height:27px;font-size:17px}.typing-panel .input-track{min-height:28px}.play-help{font-size:9px}.prompt-copy .label{font-size:8px}.prompt-copy em{display:none}#kb{padding-top:5px}.prompt-line{gap:7px}}
+  @media(min-width:761px) and (min-height:541px) and (max-height:680px){#stage{min-height:220px}.play-help{display:none}#workbench{padding-top:7px;padding-bottom:7px}.typing-panel{padding:6px 9px}}
+  @media(prefers-reduced-motion:reduce){.typed-char.current:after{animation:none}.typing-progress i{transition:none}}
+  .memory-dialog{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:24px;background:#29493880;backdrop-filter:blur(5px)}.memory-dialog[hidden]{display:none}
+  .memory-sheet{width:min(860px,100%);max-height:calc(100dvh - 48px);overflow:auto;background:#FAF7ED;border:1px solid #FFFFF5;border-radius:19px 4px 19px 19px;padding:27px 30px;box-shadow:0 24px 90px #1D3F3645}
+  .memory-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;border-bottom:1px solid #D5DECA;padding-bottom:14px}.memory-kicker{font:10px "Trebuchet MS",sans-serif;letter-spacing:.2em;color:#849373}.memory-head h2{font:700 31px Georgia,"Microsoft YaHei",serif;color:#315440;margin:7px 0}.memory-head p{font-size:12px;color:#658064;line-height:1.7}.memory-head button{flex-shrink:0}
+  .memory-grid{display:grid;grid-template-columns:minmax(190px,280px) 1fr;gap:26px;margin:22px 0}.memory-figure{margin:0}.memory-figure svg{width:100%;height:auto;display:block}.memory-figure figcaption{font-size:10px;color:#8B977F;margin:9px 0;line-height:1.6}.memory-body{min-width:0}.memory-body .memory-en{font:700 23px/1.5 Georgia,serif;color:#34563F;margin:4px 0 8px;overflow-wrap:anywhere}.memory-zh{font-size:13px;line-height:1.8;color:#7C8B73}.memory-chunk{font:12px/1.8 "Trebuchet MS","Microsoft YaHei",sans-serif;color:#926A3F;padding:10px 12px;border-left:3px solid #CBA46A;background:#F3EDDA;margin:16px 0}.memory-related{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.memory-related button{font:12px "Trebuchet MS","Microsoft YaHei",sans-serif;background:#E7EDDB;color:#42664B;border:1px solid #D0DCC2;border-radius:6px;padding:8px 10px;cursor:pointer}.memory-related button:hover{background:#D8E5CB}.memory-foot{font-size:11px;line-height:1.9;color:#829074;border-top:1px solid #D5DECA;padding-top:12px}.memory-cover-note{font-size:10px;color:#89967D;margin-top:7px}.memory-gate{font-size:12px;line-height:1.9;color:#7B8B70;padding:14px;background:#EAF0DE;border-radius:8px;margin-bottom:14px}.memory-dictionary{font:15px/1.8 Georgia,serif;color:#586F50}.memory-body[hidden],.memory-figure[hidden],#memoryGate[hidden],#memoryShow[hidden]{display:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="brand"><small>WORD ASCENT / 每天向上一点</small><strong>TOEIC 跳一跳</strong></div>
+    <div class="stat">关卡<b id="sLv">1</b></div><div class="stat score-stat">得分<b id="sScore">0</b></div><div class="stat jump-stat">跳跃<b id="sJump">0</b></div><div class="stat" id="comboStat"><span id="comboLabel">连击</span><b id="sCombo">0</b></div><div class="stat">准确率<b id="sAcc">100%</b></div><div class="stat">进度<b id="sProg">0/0</b></div>
+    <div class="hud-spacer"></div><button class="ghost-btn" id="bFinish" hidden>结束本次</button><button class="ghost-btn" id="bHint">显示答案</button><button class="ghost-btn" id="bSound">音效：关</button><button class="ghost-btn" id="bLevel">菜单</button>
+  </header>
+  <div id="storageNotice" role="status" aria-live="polite" hidden></div>
+  <main id="stage">
+    <canvas id="cv" aria-label="沿登山绳向上攀登的英语学习游戏"></canvas><div class="stage-label">每一个单词，都是向上的一步。</div>
+    <aside class="ascent-card" aria-label="攀登记录"><div class="eyebrow">攀登足迹</div><div class="altitude-number"><b id="altHeight">0</b><span>米</span></div><p id="altZone">山脚营地</p><div class="altitude-track"><i id="altBar"></i></div><div class="altitude-foot"><span id="altSession">本次 +0 米</span><span id="altNext">下站 100 米</span></div></aside>
+    <div id="ascentMilestone" class="ascent-milestone" role="status" aria-live="polite" hidden><b id="milestoneTitle"></b><span id="milestoneMessage"></span></div>
+    <aside class="route-card"><div class="eyebrow">Current route</div><h2 id="routeName">Office Basics</h2><p id="routeDesc">从日常办公词汇开始，练习看义拼写。</p><div class="route-progress"><i id="routeBar"></i></div></aside>
+    <section id="overlay"><div class="menu-card"><div class="menu-content">
+      <div class="menu-hero"><div class="menu-title"><div class="kicker">Your pace. Your ascent.</div><h1>想学多久，<span>就向上走多久。</span></h1><p>看词义，拼英文，带小机器人一路向上。无限模式不限制每天的新词数量；也可选每日计划，按建议量稳步练习。</p></div>
+      <div class="menu-illustration" aria-hidden="true"><svg viewBox="0 0 180 180" fill="none"><circle cx="92" cy="85" r="73" fill="#E7ECD7"/><circle cx="128" cy="45" r="17" fill="#F5DEAA"/><path d="M9 125 66 35 125 125Z" fill="#A9C2A5"/><path d="m66 35 59 90H68Z" fill="#88A98D"/><path d="m66 35-20 32 17-8 10 7 5-13Z" fill="#F5F3DF"/><path d="m70 133 54-73 49 73Z" fill="#648A70"/><path d="m124 60-18 24 17-8 12 8Z" fill="#DCE5C8"/><path d="M8 137q70-30 164 0" stroke="#426B50" stroke-width="3" stroke-linecap="round"/><path d="M67 143q31-16 24-29T72 91" stroke="#FAF7ED" stroke-width="2" stroke-dasharray="3 5"/><path d="M66 53V27m0 0 24 6-24 7" stroke="#B67B4B" stroke-width="2" stroke-linejoin="round"/><path d="m66 27 24 6-24 7Z" fill="#D99A65"/><text x="90" y="166" text-anchor="middle" fill="#78906D" font-size="8" font-family="Georgia" letter-spacing="3">WORD ASCENT</text></svg></div></div>
+      <div class="how"><div><b>01 / 输入就有回应</b><span>绿色是已输入，光标是下一位，红色表示输错。</span></div><div><b>02 / 两次后隔开</b><span>初练两次换词，约两分钟后再回忆，第三次才计入掌握。</span></div><div><b>03 / 图文串起来</b><span>点“记忆联想”看场景、短句和搭配；无限模式自动接新词。</span></div></div>
+      <p class="mode-note">电脑键盘直接输入，或点击下方字母键；输入框也支持粘贴。请使用英文输入法。</p>
+      <div class="level-picker" id="levels"></div><p id="menuLevelNote"></p><p id="menuStatus" role="status"></p>
+      <div class="menu-settings"><label for="unitSelect">学习单元</label><select id="unitSelect"></select><label for="modeSelect">练习方式</label><select id="modeSelect"><option value="follow">渐隐练习</option><option value="recall">看义回忆</option><option value="listen">听音拼词</option></select></div>
+      </div>
+      <div class="menu-actions"><button class="primary-btn" id="bEndless">开始无限攀登</button><button class="ghost-btn" id="bStart">每日计划 · 5 新词</button><button class="ghost-btn" id="bReview">只复习旧词</button><button class="ghost-btn" id="bReset">清除本地进度</button></div>
+      <p class="route-disclaimer" style="margin-top:14px;font-size:9px;color:#939C86">进度保存在当前浏览器，不跨设备同步。路线参考 A1→C1，词汇通关不等于考试等级认证；高分还需配合听力与阅读。</p>
+    </div></section>
+    <section id="summary" class="hide"><div class="summary-card" id="sumCard"><h2 id="sumTitle">关卡完成</h2><div class="sub" id="sumSub"></div><div class="summary-stats" id="sumStats"></div><div class="summary-actions"><button class="primary-btn" id="sumNext">继续向上</button><button class="ghost-btn" id="sumMenu">回到菜单</button></div></div></section>
+  </main>
+  <section id="workbench"><div class="prompt-line"><div class="prompt-copy"><div class="label">YOUR NEXT STEP / 下一步</div><strong id="promptMeaning">准备好开始</strong><em id="promptExample">Type the word on the next platform.</em><span id="promptFull" hidden></span></div><div class="typing-panel" id="typingPanel"><div class="typing-meta"><span id="inputStatus" role="status" aria-live="polite">选择模式后开始输入</span><b id="inputCount">0 / 0</b></div><div class="input-track" id="inputTrack" aria-hidden="true"></div><div class="typing-progress"><i id="inputProgress"></i></div><input id="typingCapture" class="typing-capture" type="text" aria-label="英文单词输入框" aria-describedby="inputStatus inputCount" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="text" readonly></div><div class="input-tip" id="inputTip">可跳目标 <strong id="targetCount">0</strong></div></div><div class="practice-tools"><label for="playMode">模式</label><select id="playMode"><option value="follow">渐隐练习</option><option value="recall">看义回忆</option><option value="listen">听音拼词</option></select><label for="targetSelect">目标</label><select id="targetSelect"></select><button class="ghost-btn" id="bMemory" aria-haspopup="dialog">记忆联想</button><button class="ghost-btn" id="bSpeak">听发音</button><button class="ghost-btn" id="bReveal">看答案</button><a href="data/SOURCES.md" target="_blank" rel="noopener">词库来源</a></div><p class="play-help"><strong>初练两次后自动换词</strong> · 约两分钟后再回忆 · Backspace 退格 · Esc 清空 · Tab 切换目标</p><div id="kb"></div></section>
+  <section class="memory-dialog" id="memoryDialog" role="dialog" aria-modal="true" aria-labelledby="memoryTitle" hidden><div class="memory-sheet">
+    <div class="memory-head"><div><div class="memory-kicker">CONNECT / 把词放进情境</div><h2 id="memoryTitle">记忆联想</h2><p id="memoryMeaning"></p></div><button class="ghost-btn" id="memoryClose">关闭，继续打字 · Esc</button></div>
+    <div class="memory-grid"><figure class="memory-figure" id="memoryFigure"><div id="memoryArt"></div><figcaption id="memoryCaption"></figcaption></figure><div class="memory-body"><div id="memoryGate" class="memory-gate"></div><button class="primary-btn" id="memoryShow">查看联想（本次作为提示练习）</button><p class="memory-en" id="memorySentence"></p><p class="memory-zh" id="memoryTranslation"></p><p class="memory-chunk" id="memoryChunk"></p><p class="memory-dictionary" id="memoryDefinition"></p><div class="memory-related" id="memoryRelated"></div><button class="ghost-btn" id="memoryBack" hidden>返回当前目标词</button></div></div>
+    <div class="memory-foot" id="memoryNote"></div><p class="memory-cover-note" id="memoryCoverage"></p>
+  </div></section>
+</div>
+<script src="vocabulary.js"></script>
+<script src="learning.js"></script>
+<script src="ascent.js"></script>
+<script src="memory.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

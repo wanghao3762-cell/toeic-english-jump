@@ -1,0 +1,14 @@
+# 65MB 词典源文件，按 data/SOURCES.md 里的官方地址重新下载即可，不入库
+data/sources/ecdict.csv
+
+# 本机工作区
+.workbuddy/
+__pycache__/
+*.pyc
+
+# 系统杂物
+.DS_Store
+Thumbs.db
+
+# 独立仓库的参考项目，不随本项目入库
+汉字双拼跳一跳/
