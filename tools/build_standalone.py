@@ -1,11 +1,12 @@
 """Export an offline single HTML from the editable source files."""
 from pathlib import Path
+import re
 
 root=Path(__file__).resolve().parents[1]
 html=(root/'index.html').read_text(encoding='utf-8')
-for name in ['vocabulary.js','learning.js','ascent.js','memory.js','app.js']:
+for name in ['vocabulary.js','learning.js','ascent.js','memory.js','comfort.js','app.js']:
     content=(root/name).read_text(encoding='utf-8').replace('</script','<\\/script')
-    html=html.replace(f'<script src="{name}"></script>',f'<script>\n{content}\n</script>')
+    html=re.sub(r'<script src="'+re.escape(name)+r'(?:\?[^"\s]*)?"></script>',lambda _:f'<script>\n{content}\n</script>',html)
 notice='''<!-- Vocabulary: NGSL (Browne, Culligan, Phillips) and TSL (Browne, Culligan),
 CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
 https://www.newgeneralservicelist.com/new-general-service-list

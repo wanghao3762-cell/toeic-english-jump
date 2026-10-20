@@ -1,0 +1,107 @@
+{
+  "rest": {
+    "initialPrefix": "of",
+    "after20SecondsPrefix": "of",
+    "completedWord": "office",
+    "didNotAutoResume": true
+  },
+  "firstSession": {
+    "jumps": 23,
+    "batches": 2,
+    "startHeight": 3475,
+    "endHeight": 4699,
+    "words": [
+      "book",
+      "call",
+      "read",
+      "that",
+      "day",
+      "on",
+      "with",
+      "this",
+      "do",
+      "have",
+      "for",
+      "not",
+      "that",
+      "on",
+      "with",
+      "this",
+      "do",
+      "write",
+      "the",
+      "be",
+      "and",
+      "of"
+    ]
+  },
+  "longWord": {
+    "word": "organizational",
+    "size": "larger",
+    "rows": 2
+  },
+  "secondSession": {
+    "jumps": 15,
+    "afterSwitchToCenter": [
+      "organizational",
+      "outlook",
+      "physics",
+      "morale",
+      "orchestra",
+      "organizational",
+      "outlook",
+      "physics"
+    ],
+    "height": 5497
+  },
+  "settingsReload": {
+    "size": "larger",
+    "minutes": 10
+  },
+  "finalPreferences": {
+    "route": "switchback",
+    "size": "large",
+    "varied": true,
+    "calm": true,
+    "minutes": 20
+  },
+  "layouts": [
+    {
+      "height": 600,
+      "keyboardBottom": 588,
+      "metaFont": "12px",
+      "scrollHeight": 600,
+      "scrollWidth": 1024,
+      "stageBottom": 357,
+      "width": 1024
+    },
+    {
+      "height": 720,
+      "keyboardBottom": 706,
+      "metaFont": "12px",
+      "scrollHeight": 720,
+      "scrollWidth": 1280,
+      "stageBottom": 445,
+      "width": 1280
+    },
+    {
+      "height": 900,
+      "keyboardBottom": 881,
+      "metaFont": "12px",
+      "scrollHeight": 900,
+      "scrollWidth": 1440,
+      "stageBottom": 598,
+      "width": 1440
+    },
+    {
+      "height": 1080,
+      "keyboardBottom": 1061,
+      "metaFont": "12px",
+      "scrollHeight": 1080,
+      "scrollWidth": 1920,
+      "stageBottom": 778,
+      "width": 1920
+    }
+  ],
+  "consoleErrors": []
+}

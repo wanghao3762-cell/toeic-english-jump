@@ -1,0 +1,90 @@
+{
+  "start": "5,825",
+  "end": {
+    "jumps": "30",
+    "height": "7,715",
+    "route": "无限 · 第 3 组 · 已完成 0 词 · 本组 0/10"
+  },
+  "words": [
+    "that",
+    "for",
+    "on",
+    "with",
+    "this",
+    "as",
+    "at",
+    "but",
+    "from",
+    "by",
+    "as",
+    "at",
+    "but",
+    "from",
+    "by",
+    "do",
+    "write",
+    "the",
+    "be",
+    "and",
+    "will",
+    "or",
+    "say",
+    "so",
+    "all",
+    "will",
+    "or",
+    "say",
+    "so",
+    "all"
+  ],
+  "layouts": [
+    {
+      "height": 600,
+      "input": "准备输入 · 英文键盘 / 下方字母键",
+      "keyboardBottom": 588,
+      "scrollHeight": 600,
+      "scrollWidth": 1024,
+      "stageHeight": 295,
+      "width": 1024
+    },
+    {
+      "height": 720,
+      "input": "准备输入 · 英文键盘 / 下方字母键",
+      "keyboardBottom": 706,
+      "scrollHeight": 720,
+      "scrollWidth": 1280,
+      "stageHeight": 380,
+      "width": 1280
+    },
+    {
+      "height": 900,
+      "input": "准备输入 · 英文键盘 / 下方字母键",
+      "keyboardBottom": 881,
+      "scrollHeight": 900,
+      "scrollWidth": 1440,
+      "stageHeight": 522,
+      "width": 1440
+    },
+    {
+      "height": 1280,
+      "input": "准备输入 · 英文键盘 / 下方字母键",
+      "keyboardBottom": 1261,
+      "scrollHeight": 1280,
+      "scrollWidth": 1424,
+      "stageHeight": 902,
+      "width": 1424
+    },
+    {
+      "height": 1080,
+      "input": "准备输入 · 英文键盘 / 下方字母键",
+      "keyboardBottom": 1061,
+      "scrollHeight": 1080,
+      "scrollWidth": 1920,
+      "stageHeight": 702,
+      "width": 1920
+    }
+  ],
+  "logs": [],
+  "osReducedObserved": true,
+  "airEvidence": "jump-final-air.png"
+}

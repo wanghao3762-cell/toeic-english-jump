@@ -115,6 +115,22 @@
   .memory-sheet{width:min(860px,100%);max-height:calc(100dvh - 48px);overflow:auto;background:#FAF7ED;border:1px solid #FFFFF5;border-radius:19px 4px 19px 19px;padding:27px 30px;box-shadow:0 24px 90px #1D3F3645}
   .memory-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;border-bottom:1px solid #D5DECA;padding-bottom:14px}.memory-kicker{font:10px "Trebuchet MS",sans-serif;letter-spacing:.2em;color:#849373}.memory-head h2{font:700 31px Georgia,"Microsoft YaHei",serif;color:#315440;margin:7px 0}.memory-head p{font-size:12px;color:#658064;line-height:1.7}.memory-head button{flex-shrink:0}
   .memory-grid{display:grid;grid-template-columns:minmax(190px,280px) 1fr;gap:26px;margin:22px 0}.memory-figure{margin:0}.memory-figure svg{width:100%;height:auto;display:block}.memory-figure figcaption{font-size:10px;color:#8B977F;margin:9px 0;line-height:1.6}.memory-body{min-width:0}.memory-body .memory-en{font:700 23px/1.5 Georgia,serif;color:#34563F;margin:4px 0 8px;overflow-wrap:anywhere}.memory-zh{font-size:13px;line-height:1.8;color:#7C8B73}.memory-chunk{font:12px/1.8 "Trebuchet MS","Microsoft YaHei",sans-serif;color:#926A3F;padding:10px 12px;border-left:3px solid #CBA46A;background:#F3EDDA;margin:16px 0}.memory-related{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.memory-related button{font:12px "Trebuchet MS","Microsoft YaHei",sans-serif;background:#E7EDDB;color:#42664B;border:1px solid #D0DCC2;border-radius:6px;padding:8px 10px;cursor:pointer}.memory-related button:hover{background:#D8E5CB}.memory-foot{font-size:11px;line-height:1.9;color:#829074;border-top:1px solid #D5DECA;padding-top:12px}.memory-cover-note{font-size:10px;color:#89967D;margin-top:7px}.memory-gate{font-size:12px;line-height:1.9;color:#7B8B70;padding:14px;background:#EAF0DE;border-radius:8px;margin-bottom:14px}.memory-dictionary{font:15px/1.8 Georgia,serif;color:#586F50}.memory-body[hidden],.memory-figure[hidden],#memoryGate[hidden],#memoryShow[hidden]{display:none}
+  /* Desktop comfort: quiet motion, readable words, and genuine off-screen breaks. */
+  .comfort-tools{display:flex;align-items:center;gap:10px;position:absolute;left:24px;bottom:17px;z-index:3}
+  .comfort-tools .ghost-btn{font-size:12px;background:#FAF7ED}.comfort-status{font:11px "Trebuchet MS","Microsoft YaHei",sans-serif;color:#284E46;margin-top:8px}
+  .comfort-dialog{position:fixed;inset:0;z-index:24;display:flex;align-items:center;justify-content:center;padding:24px;background:#29493885;backdrop-filter:blur(5px)}.comfort-dialog[hidden]{display:none}
+  .comfort-sheet{width:min(780px,100%);max-height:calc(100dvh - 48px);overflow:auto;background:#FAF7ED;border:1px solid #FFFDF5;border-radius:3px 22px 22px 22px;padding:28px 32px;box-shadow:0 24px 90px #1D3F3645;line-height:1.7;font-size:14px}
+  .comfort-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}.comfort-head h2{font:700 28px Georgia,"Microsoft YaHei",serif;margin:5px 0 8px}.comfort-sheet p{color:#456454;margin:8px 0}.comfort-sheet .eyebrow{font-size:11px}
+  .comfort-options{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;border-top:1px solid #D3DDCC;margin:20px 0;padding-top:20px}.comfort-options label{display:flex;flex-direction:column;gap:6px;font-weight:600}.comfort-options select{background:#FFFDF5;border:1px solid #91AA96;border-radius:6px;padding:10px;font-size:14px}.comfort-options label small{font-size:12px;font-weight:400;color:#4B6859}.comfort-options .check-option{flex-direction:row;align-items:flex-start;gap:10px}.comfort-options input{margin-top:6px;accent-color:#3F7058;width:17px;height:17px;flex:none}
+  .comfort-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;border-top:1px solid #D3DDCC;padding-top:18px}.comfort-sheet button{font-size:14px}.comfort-sheet .comfort-note{font-size:12px;color:#4B6859}.comfort-sheet a{color:#315E4B;text-underline-offset:3px}
+  .rest-sheet{display:grid;grid-template-columns:180px 1fr;gap:30px;width:min(760px,100%)}.rest-landscape{border-right:1px solid #CDD9C7;padding-right:25px;align-self:stretch;display:flex;flex-direction:column;justify-content:center}.rest-landscape svg{width:100%;height:auto}.rest-landscape b{font:700 42px Georgia,serif;color:#315E4B;margin-top:16px}.rest-landscape span{font-size:13px;color:#456454}.rest-copy h2{font:700 27px/1.6 Georgia,"Microsoft YaHei",serif}.rest-copy .comfort-actions{margin-top:20px}.rest-copy .rest-main{font-size:17px;color:#273E36}
+  #app[data-word-size="large"] .typing-panel .typed-char{font-size:22px}#app[data-word-size="larger"] .typing-panel .typed-char{font-size:25px;flex-basis:29px;min-width:29px}
+  #app[data-word-size="large"] .prompt-copy strong{font-size:17px}#app[data-word-size="larger"] .prompt-copy strong{font-size:19px}
+  .prompt-copy em{font-size:12px;color:#4B6859}.memory-zh{font-size:15px;color:#4B6859}.memory-head p{font-size:14px;color:#456454}.memory-body .memory-chunk{font-size:14px}.typing-meta{color:#456454}
+  .typed-char.remaining{color:#536C58}.typed-char.current{color:#355E49}
+  @media(min-width:761px){.typing-meta{font-size:12px}.typing-meta b{font-size:13px}.key{font-size:13px}}
+  #app.quiet *,#app.quiet *:before,#app.quiet *:after{animation:none!important;transition:none!important}
+  @media(min-width:761px) and (max-height:680px){.comfort-tools{left:16px;bottom:10px}.comfort-tools .ghost-btn{padding:6px 10px}.stage-label{display:none}}
 </style>
 </head>
 <body>
@@ -126,15 +142,16 @@
   </header>
   <div id="storageNotice" role="status" aria-live="polite" hidden></div>
   <main id="stage">
-    <canvas id="cv" aria-label="沿登山绳向上攀登的英语学习游戏"></canvas><div class="stage-label">每一个单词，都是向上的一步。</div>
-    <aside class="ascent-card" aria-label="攀登记录"><div class="eyebrow">攀登足迹</div><div class="altitude-number"><b id="altHeight">0</b><span>米</span></div><p id="altZone">山脚营地</p><div class="altitude-track"><i id="altBar"></i></div><div class="altitude-foot"><span id="altSession">本次 +0 米</span><span id="altNext">下站 100 米</span></div></aside>
+    <canvas id="cv" aria-label="沿折返山路逐阶向上攀登的英语学习游戏"></canvas><div class="stage-label">每一个单词，都是向上的一步。</div>
+    <div class="comfort-tools"><button class="ghost-btn" id="bComfort" aria-haspopup="dialog">舒适设置</button><button class="ghost-btn" id="bRest">歇眼 20 秒</button></div>
+    <aside class="ascent-card" aria-label="攀登记录"><div class="eyebrow">攀登足迹</div><div class="altitude-number"><b id="altHeight">0</b><span>米</span></div><p id="altZone">山脚营地</p><div class="altitude-track"><i id="altBar"></i></div><div class="altitude-foot"><span id="altSession">本次 +0 米</span><span id="altNext">下站 100 米</span></div><div class="comfort-status" id="comfortStatus"></div></aside>
     <div id="ascentMilestone" class="ascent-milestone" role="status" aria-live="polite" hidden><b id="milestoneTitle"></b><span id="milestoneMessage"></span></div>
     <aside class="route-card"><div class="eyebrow">Current route</div><h2 id="routeName">Office Basics</h2><p id="routeDesc">从日常办公词汇开始，练习看义拼写。</p><div class="route-progress"><i id="routeBar"></i></div></aside>
     <section id="overlay"><div class="menu-card"><div class="menu-content">
       <div class="menu-hero"><div class="menu-title"><div class="kicker">Your pace. Your ascent.</div><h1>想学多久，<span>就向上走多久。</span></h1><p>看词义，拼英文，带小机器人一路向上。无限模式不限制每天的新词数量；也可选每日计划，按建议量稳步练习。</p></div>
       <div class="menu-illustration" aria-hidden="true"><svg viewBox="0 0 180 180" fill="none"><circle cx="92" cy="85" r="73" fill="#E7ECD7"/><circle cx="128" cy="45" r="17" fill="#F5DEAA"/><path d="M9 125 66 35 125 125Z" fill="#A9C2A5"/><path d="m66 35 59 90H68Z" fill="#88A98D"/><path d="m66 35-20 32 17-8 10 7 5-13Z" fill="#F5F3DF"/><path d="m70 133 54-73 49 73Z" fill="#648A70"/><path d="m124 60-18 24 17-8 12 8Z" fill="#DCE5C8"/><path d="M8 137q70-30 164 0" stroke="#426B50" stroke-width="3" stroke-linecap="round"/><path d="M67 143q31-16 24-29T72 91" stroke="#FAF7ED" stroke-width="2" stroke-dasharray="3 5"/><path d="M66 53V27m0 0 24 6-24 7" stroke="#B67B4B" stroke-width="2" stroke-linejoin="round"/><path d="m66 27 24 6-24 7Z" fill="#D99A65"/><text x="90" y="166" text-anchor="middle" fill="#78906D" font-size="8" font-family="Georgia" letter-spacing="3">WORD ASCENT</text></svg></div></div>
       <div class="how"><div><b>01 / 输入就有回应</b><span>绿色是已输入，光标是下一位，红色表示输错。</span></div><div><b>02 / 两次后隔开</b><span>初练两次换词，约两分钟后再回忆，第三次才计入掌握。</span></div><div><b>03 / 图文串起来</b><span>点“记忆联想”看场景、短句和搭配；无限模式自动接新词。</span></div></div>
-      <p class="mode-note">电脑键盘直接输入，或点击下方字母键；输入框也支持粘贴。请使用英文输入法。</p>
+      <p class="mode-note">电脑键盘直接输入，或点击下方字母键；支持粘贴。请使用英文输入法。 <button class="ghost-btn" id="bMenuComfort" aria-haspopup="dialog">舒适设置 · 字号 / 远眺</button></p>
       <div class="level-picker" id="levels"></div><p id="menuLevelNote"></p><p id="menuStatus" role="status"></p>
       <div class="menu-settings"><label for="unitSelect">学习单元</label><select id="unitSelect"></select><label for="modeSelect">练习方式</label><select id="modeSelect"><option value="follow">渐隐练习</option><option value="recall">看义回忆</option><option value="listen">听音拼词</option></select></div>
       </div>
@@ -149,11 +166,30 @@
     <div class="memory-grid"><figure class="memory-figure" id="memoryFigure"><div id="memoryArt"></div><figcaption id="memoryCaption"></figcaption></figure><div class="memory-body"><div id="memoryGate" class="memory-gate"></div><button class="primary-btn" id="memoryShow">查看联想（本次作为提示练习）</button><p class="memory-en" id="memorySentence"></p><p class="memory-zh" id="memoryTranslation"></p><p class="memory-chunk" id="memoryChunk"></p><p class="memory-dictionary" id="memoryDefinition"></p><div class="memory-related" id="memoryRelated"></div><button class="ghost-btn" id="memoryBack" hidden>返回当前目标词</button></div></div>
     <div class="memory-foot" id="memoryNote"></div><p class="memory-cover-note" id="memoryCoverage"></p>
   </div></section>
+  <section class="comfort-dialog" id="comfortDialog" role="dialog" aria-modal="true" aria-labelledby="comfortTitle" hidden><div class="comfort-sheet">
+    <div class="comfort-head"><div><div class="eyebrow">AT YOUR EASE / 舒适攀登</div><h2 id="comfortTitle">看得清，也记得停一停。</h2></div><button class="ghost-btn" id="comfortClose">保存并返回 · Esc</button></div>
+    <p>折返山路让视线自然换个位置；字牌读写期间不变大小、不追着视线移动。字号层次只是画面设计，不是远近调焦或视力训练。</p>
+    <div class="comfort-options">
+      <label for="comfortRoute">路线走向<select id="comfortRoute"><option value="switchback">左右折返 · 山路攀升</option><option value="center">居中路线 · 少移动视线</option></select><small>路线变更从新浮岛开始，不搬动已有浮岛。</small></label>
+      <label for="comfortSize">阅读字号<select id="comfortSize"><option value="normal">标准大字</option><option value="large">舒适大字（默认）</option><option value="larger">更大字号</option></select><small>长单词自动换行，不缩成小字。</small></label>
+      <label class="check-option"><input type="checkbox" id="comfortVaried"><span>不同浮岛轻微字号分层<small style="display:block">同一字牌保持稳定，可关闭以固定字号。</small></span></label>
+      <label class="check-option"><input type="checkbox" id="comfortCalm"><span>减少动态（默认开启）<small style="display:block">关闭闪烁、震动和背景飘动；保留轻巧跳跃，系统减少动态时使用更短、更低的小跳。</small></span></label>
+      <label for="comfortMinutes">离屏远眺提醒<select id="comfortMinutes"><option value="20">每 20 分钟（建议）</option><option value="10">每 10 分钟</option><option value="30">每 30 分钟</option><option value="0">关闭自动提醒</option></select><small>累计当前浏览器内的有效学习时间；不会打断正在输入的单词。</small></label>
+      <div><b>屏幕之外，也要舒适</b><p class="comfort-note">自然、完整地眨眼。文字不清先放大，别越凑越近；屏幕通常至少约 50 厘米远，减少反光，环境与屏幕亮度保持舒适。</p></div>
+    </div>
+    <div class="comfort-actions"><button class="primary-btn" id="comfortSave">保存并继续</button><button class="ghost-btn" id="comfortRest">现在离屏休息</button></div>
+    <p class="comfort-note">默认提醒参考 <a href="https://www.aoa.org/healthy-eyes/eye-and-vision-conditions/computer-vision-syndrome/20-20-20-rule?sso=y" target="_blank" rel="noopener">AOA 的 20-20-20 建议</a>：约每 20 分钟看 6 米外至少 20 秒。游戏不保证防治近视；持续疼痛、视物模糊或不适，请停止并咨询眼科专业人员。</p>
+  </div></section>
+  <section class="comfort-dialog" id="restDialog" role="dialog" aria-modal="true" aria-labelledby="restTitle" hidden><div class="comfort-sheet rest-sheet">
+    <div class="rest-landscape" aria-hidden="true"><svg viewBox="0 0 160 130" fill="none"><circle cx="119" cy="31" r="19" fill="#EACF94"/><path d="m0 115 53-86 65 86" fill="#ABC4AF"/><path d="m53 29-19 31 18-10 17 11" fill="#F9F6EA"/><path d="m53 115 55-65 52 65" fill="#628D79"/><path d="M0 119h160" stroke="#315E4B" stroke-width="2"/></svg><b id="restSeconds">20</b><span>秒 · 不必盯着倒计时</span></div>
+    <div class="rest-copy"><div class="eyebrow">A LITTLE PAUSE / 山间小憩</div><h2 id="restTitle">把目光，交给窗外。</h2><p class="rest-main">请看向屏幕外约 6 米远处，放松至少 20 秒，自然眨眼。</p><p>这里的山只是提示，请真的看向远处的物体；没有远景时也可以暂时闭眼放松。输入内容和攀登位置都会保留。</p><p id="restStatus" role="status" aria-live="polite">休息结束后，可自己决定何时继续。</p><div class="comfort-actions"><button class="primary-btn" id="restContinue" disabled>休息中…</button><button class="ghost-btn" id="restLater">稍后 5 分钟提醒 · Esc</button></div><p class="comfort-note">网页只能计时，无法确认你是否远眺；无惩罚、不影响学习进度。</p></div>
+  </div></section>
 </div>
-<script src="vocabulary.js"></script>
-<script src="learning.js"></script>
-<script src="ascent.js"></script>
-<script src="memory.js"></script>
-<script src="app.js"></script>
+<script src="vocabulary.js?v=20261020-jump2"></script>
+<script src="learning.js?v=20261020-jump2"></script>
+<script src="ascent.js?v=20261020-jump2"></script>
+<script src="memory.js?v=20261020-jump2"></script>
+<script src="comfort.js?v=20261020-jump2"></script>
+<script src="app.js?v=20261020-jump2"></script>
 </body>
 </html>

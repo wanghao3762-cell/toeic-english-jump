@@ -49,7 +49,7 @@ function boot(store=new Map(),width=820,height=520,reduced=false){
   const sandbox={document,localStorage,console,Date,Intl,performance:{now:()=>clock},requestAnimationFrame:noop,setTimeout:fn=>{fn();return 1},confirm:()=>false};
   sandbox.window=sandbox;sandbox.addEventListener=noop;sandbox.devicePixelRatio=1;sandbox.matchMedia=()=>({matches:reduced});
   vm.createContext(sandbox);
-  for(const filename of ['vocabulary.js','learning.js','ascent.js','memory.js','app.js'])vm.runInContext(fs.readFileSync(path.join(root,filename),'utf8'),sandbox,{filename});
+  for(const filename of ['vocabulary.js','learning.js','ascent.js','memory.js','comfort.js','app.js'])vm.runInContext(fs.readFileSync(path.join(root,filename),'utf8'),sandbox,{filename});
   function frames(n=75){for(let i=0;i<n;i++){clock+=16;if(sandbox.S.running)sandbox.update(.016)}}
   function type(word){for(const c of word)sandbox.onKey(c)}
   return {g:sandbox,els,store,frames,type,listeners,ctx,setSize(w,h){viewport.width=w;viewport.height=h;sandbox.resize()}};
@@ -112,7 +112,8 @@ test('word targets clear the robot head and desktop reference panels',()=>{
 test('reduced-motion path and old saves retain learning progress without fabricating height',()=>{
   const migrated=L.load(JSON.stringify({version:2,words:{work:{correct:3}},days:{},settings:{}}));assert.equal(migrated.journey.height,0);assert.equal(migrated.words.work.correct,3);
   const b=boot(new Map(),375,400,true);b.els.bStart.onclick();b.type(b.g.currentFocus().w.answer);
-  assert.equal(b.g.S.jump.arc,0);assert.equal(b.g.S.jump.dur,180);b.frames();assert.equal(b.g.state.journey.jumps,1);b.g.draw();
+  // OS reduced-motion keeps the essential jump, but lowers the arc and duration.
+  assert.ok(b.g.S.jump.arc>=46&&b.g.S.jump.arc<80);assert.equal(b.g.S.jump.dur,300);b.frames();assert.equal(b.g.state.journey.jumps,1);b.g.draw();
 });
 test('same-day extra practice never inflates the spaced-review interval',()=>{
   const s=L.empty();master(s,'work');
@@ -192,7 +193,9 @@ test('endless mode advances units without resetting the world or session score',
   const b=boot();b.g.now=()=>time;const ws=b.g.L.unitWords(b.g.VOCAB,1,0);
   ws.slice(0,19).forEach(w=>{b.g.state.words[w.w]={correct:3,last:time,due:time+L.DAY,reviews:0,mistakes:0}});
   b.els.bEndless.onclick();let guard=0;while(b.g.S.unit===0&&guard++<30){b.type(b.g.currentFocus().w.answer);b.frames();}
-  assert.equal(b.g.S.unit,1);assert.equal(b.g.S.jumps,2);assert.ok(b.g.S.score>0);assert.ok(b.g.S.alt>0);assert.equal(b.g.S.running,true);
+  // The next unit can be previewed before the last word's second hit. Visiting
+  // those fixed islands must not reset the world or strand the outstanding word.
+  assert.equal(b.g.S.unit,1);assert.ok(b.g.S.jumps>=2&&b.g.S.jumps<=2+b.g.AHEAD*2);assert.equal(b.g.record(ws[19].w).correct,2);assert.ok(b.g.S.score>0);assert.ok(b.g.S.alt>0);assert.equal(b.g.S.running,true);
 });
 test('finish requested in midair waits for the correct landing',()=>{
   const b=boot();b.els.bEndless.onclick();b.type(b.g.currentFocus().w.answer);b.els.bFinish.onclick();
@@ -356,5 +359,123 @@ test('continuous climbing keeps a bounded history and never resets the camera at
     assert.ok(aheacount>=1&&aheacount<=b.g.AHEAD,'the look-ahead must stay between one step and the full buffer');assert.ok(b.g.S.stakes.length<=9,'old islands must leave from the bottom, not accumulate forever');
   }
   assert.ok(b.g.S.batches>=11);assert.equal(b.g.S.jumps,100);
+});
+test('comfort settings sanitize independently and do not replace saved learning data',()=>{
+  const C=require('../comfort.js'),bad=C.load('{'),weird=C.load(JSON.stringify({prefs:{minutes:1,size:'tiny',route:'unsafe'},used:-20}));
+  assert.equal(bad.prefs.minutes,20);assert.equal(weird.prefs.size,'large');assert.equal(weird.prefs.route,'switchback');assert.equal(weird.used,0);
+  const b=boot();b.els.bEndless.onclick();b.type(b.g.currentFocus().w.answer);b.frames();const saved=b.store.get('toeic-learning-v2'),height=b.g.state.journey.height;
+  b.els.bComfort.onclick();b.els.comfortSize.value='larger';b.els.comfortMinutes.value='0';b.els.comfortSave.onclick();
+  assert.equal(b.store.get('toeic-learning-v2'),saved);const reload=boot(b.store);assert.equal(reload.g.comfort.prefs.size,'larger');assert.equal(reload.g.comfort.prefs.minutes,0);assert.equal(reload.g.state.journey.height,height);
+});
+test('switchback route spans both directions, stays reachable, and keeps laid words fixed',()=>{
+  for(const [width,height] of [[1024,270],[1280,440],[1440,760],[1920,1200]]){
+    const b=boot(new Map(),width,height);b.els.bEndless.onclick();let left=false,right=false,min=Infinity,max=-Infinity;
+    for(let n=0;n<32;n++){
+      const t=b.g.currentFocus(),dx=t.x-b.g.S.cur.x,before=b.g.S.stakes.map(s=>({s,x:s.x,y:s.y,font:s.fontSize,w:s.w}));
+      left=left||dx<0;right=right||dx>0;min=Math.min(min,t.x);max=Math.max(max,t.x);
+      assert.ok(Math.hypot(dx,t.y-b.g.S.cur.y)<=b.g.MAXJ);
+      assert.ok(t.x-b.g.STAKE_W/2>=190);assert.ok(t.x+b.g.STAKE_W/2<=width-233);
+      b.type(t.w.answer);b.frames();before.filter(r=>b.g.S.stakes.includes(r.s)).forEach(r=>{assert.equal(r.s.x,r.x);assert.equal(r.s.y,r.y);assert.equal(r.s.w,r.w);assert.equal(r.s.fontSize,r.font)});
+    }
+    assert.ok(left&&right,'route must turn, not drift forever');assert.ok(max-min>100);
+  }
+});
+test('comfort font floor and every vocabulary word fit in at most two readable lines',()=>{
+  const C=require('../comfort.js');for(const size of ['normal','large','larger'])for(const varied of [true,false])for(let i=0;i<4;i++){
+    const font=C.font({size,varied},i);assert.ok(font>=20&&font<=32);
+    vocab.forEach(w=>{let f=font,rows;do{rows=C.wrap(w.answer,178,s=>s.length*f*.66);if(rows.length<=2||f<=20)break;f--}while(true);assert.ok(rows.length<=2);assert.ok(f>=20);assert.equal(rows.map(r=>r.text).join(''),w.answer);rows.forEach(r=>assert.ok(r.text.length*f*.66<=178));});
+  }
+});
+test('changing route at the side of the scene returns to center gradually without a stranded step',()=>{
+  for(const height of [300,600,1200]){
+    const b=boot(new Map(),1440,height);b.els.bEndless.onclick();b.g.comfort.prefs.route='center';
+    for(let n=0;n<20;n++){const target=b.g.currentFocus();assert.ok(target,'center transition must stay reachable');assert.ok(Math.hypot(target.x-b.g.S.cur.x,target.y-b.g.S.cur.y)<=300);b.type(target.w.answer);b.frames()}
+    const bounds=b.g.routeBounds();assert.ok(Math.abs(b.g.S.cur.x-(bounds.left+bounds.right)/2)<1);
+  }
+  const C=require('../comfort.js'),next=C.nextX(1091,306,1091,1,'center',280);assert.ok(Math.hypot(next.x-1091,280)<=300);
+});
+test('automatic break waits for the typed word and landing, then freezes input without losing it',()=>{
+  const b=boot();b.els.bEndless.onclick();let clock=time;b.g.now=()=>clock;const t=b.g.currentFocus();b.type(t.w.answer[0]);b.g.comfort.used=20*60000;
+  b.g.tickComfort(0);assert.equal(b.g.S.restOpen,false);b.type(t.w.answer.slice(1));b.g.tickComfort(0);assert.equal(b.g.S.restOpen,false);b.frames();b.g.tickComfort(0);assert.equal(b.g.S.restOpen,true);
+  const before=JSON.stringify(b.g.state),jumps=b.g.S.jumps;b.type('xxx');b.frames();assert.equal(b.g.S.jumps,jumps);assert.equal(JSON.stringify(b.g.state),before);assert.equal(b.els.typingCapture.readOnly,true);assert.equal(b.els.stage.inert,true);
+  b.els.restContinue.onclick();assert.equal(b.g.S.restOpen,true);clock+=20001;b.g.syncComfort();assert.equal(b.els.restContinue.disabled,false);assert.equal(b.g.S.restOpen,true,'must not auto-resume');b.els.restContinue.onclick();assert.equal(b.g.S.restOpen,false);assert.equal(b.g.comfort.used,0);assert.equal(b.els.stage.inert,false);assert.equal(b.g.S.running,true);
+});
+test('manual break and comfort dialog preserve a partial word, Escape postpones without clearing it',()=>{
+  const b=boot();b.els.bEndless.onclick();const t=b.g.currentFocus();b.type(t.w.answer[0]);const prefix=b.g.S.typed;
+  b.els.bComfort.onclick();b.g.back();b.type('z');assert.equal(b.g.S.typed,prefix);b.els.comfortSave.onclick();assert.equal(b.g.S.typed,prefix);assert.equal(b.g.currentFocus(),t);
+  b.els.bRest.onclick();b.listeners.keydown({key:'Escape',preventDefault(){}});assert.equal(b.g.S.restOpen,false);assert.equal(b.g.S.typed,prefix);assert.equal(b.g.comfort.snooze,300000);
+  b.g.tickComfort(60);assert.ok(b.g.comfort.snooze>0);assert.equal(b.g.S.restOpen,false);
+});
+test('rest stays available when reminders are disabled; hidden pages add no screen time',()=>{
+  const b=boot();b.els.bEndless.onclick();b.g.comfort.prefs.minutes=0;b.g.comfort.used=99999999;b.g.tickComfort(1);assert.equal(b.g.S.restOpen,false);
+  b.els.bRest.onclick();assert.equal(b.g.S.restOpen,true);b.els.restLater.onclick();b.g.comfort.prefs.minutes=20;b.g.comfort.used=0;b.g.document.hidden=true;b.g.tickComfort(60);assert.equal(b.g.comfort.used,0);
+  b.g.document.hidden=false;b.g.tickComfort(60);assert.equal(b.g.comfort.used,60000);
+});
+test('postponing an early manual rest really reminds after five active minutes and survives reload',()=>{
+  const C=require('../comfort.js'),c=C.load(null);C.advance(c,60000);C.postpone(c);assert.equal(C.remaining(c),300000);
+  const restored=C.load(C.save(c));assert.equal(restored.snooze,300000);assert.equal(restored.used,60000);assert.equal(C.due(restored),false);
+  for(let n=0;n<5;n++)C.advance(restored,60000);assert.equal(C.due(restored),true);assert.equal(C.remaining(restored),0);
+  C.begin(restored,time);assert.equal(C.finish(restored,time+20000),true);assert.equal(C.due(restored),false);
+});
+test('manual rest requested in midair waits for landing and reduced motion respects OS',()=>{
+  const b=boot(new Map(),1280,450,true);b.els.bEndless.onclick();b.type(b.g.currentFocus().w.answer);b.els.bRest.onclick();assert.equal(b.g.S.restRequested,true);assert.equal(b.g.S.restOpen,false);b.frames();b.g.tickComfort(0);assert.equal(b.g.S.restOpen,true);b.els.restLater.onclick();b.els.bComfort.onclick();b.els.comfortCalm.checked=false;b.els.comfortSave.onclick();assert.equal(b.g.S.reduced,true);
+});
+test('default calm is a real short ballistic jump, not a zero-arc glide',()=>{
+  const b=boot(new Map(),1424,928);b.els.bEndless.onclick();assert.equal(b.g.S.reduced,true);assert.equal(b.g.S.osReduced,false);b.type(b.g.currentFocus().w.answer);
+  const j=b.g.S.jump;assert.ok(j.arc>=76);assert.ok(j.dur>=300&&j.dur<=390);
+  const begin=b.g.jumpPosition(j,0),middle=b.g.jumpPosition(j,.5),end=b.g.jumpPosition(j,1);
+  assert.equal(begin.x,j.fx);assert.equal(begin.y,j.fy);assert.equal(end.x,j.tx);assert.equal(end.y,j.ty);
+  assert.ok(middle.y<((j.fy+j.ty)/2)-70,'feet must rise well above the support line');
+  assert.ok(b.g.jumpPosition(j,.92).y<b.g.jumpPosition(j,.98).y,'must descend before landing');
+  let guard=0;while(b.g.S.jump&&guard++<60)b.frames(1);assert.equal(b.g.S.cur,j.target);assert.ok(b.g.S.landT>0);b.frames(20);assert.equal(b.g.S.landT,0);
+});
+test('OS reduced motion still hops instead of silently forcing a straight glide',()=>{
+  const normal=boot(new Map(),1424,928),low=boot(new Map(),1424,928,true);normal.els.bEndless.onclick();low.els.bEndless.onclick();normal.type(normal.g.currentFocus().w.answer);low.type(low.g.currentFocus().w.answer);
+  const j=low.g.S.jump;assert.ok(j.arc>0&&j.arc<normal.g.S.jump.arc);assert.ok(j.dur<normal.g.S.jump.dur);
+  assert.ok(low.g.jumpPosition(j,.5).y<(j.fy+j.ty)/2-45);assert.ok(low.g.jumpPosition(j,.97).y<low.g.jumpPosition(j,1).y,'low-motion hop must also land downwards');
+});
+test('tall desktop windows use compact steps and preload beyond the top from the start',()=>{
+  for(const height of [450,704,928,1200]){
+    const b=boot(new Map(),1424,height);b.els.bEndless.onclick();const above=b.g.S.stakes.filter(s=>s.y<b.g.S.cur.y);
+    assert.ok(b.g.stepGap()>=152&&b.g.stepGap()<=184);assert.equal(above.length,b.g.AHEAD);
+    assert.ok(Math.min(...above.map(s=>b.g.stakeScreenY(s)))<=-100,'far step must wait above the viewport');
+    if(height>=928)assert.ok(above.filter(s=>b.g.stakeScreenY(s)>0).length>=3,'at least three upcoming steps must already be visible');
+  }
+});
+test('next-batch preview is read-only, not a learned word or a new-word quota event',()=>{
+  const b=boot(new Map(),1424,928);b.g.now=()=>time;b.els.bEndless.onclick();const before=JSON.stringify(b.g.state);
+  const preview=b.g.upcomingWords();assert.ok(preview.length);assert.ok(preview.every(w=>!b.g.S.pool.some(p=>p.w===w.w)));
+  assert.equal(JSON.stringify(b.g.state),before);assert.equal(b.g.L.today(b.g.state,time).introduced.length,0);
+  assert.equal(b.g.S.jumps,0);const same=b.g.upcomingWords();assert.equal(same,preview,'same-frame forecast should be cached');
+});
+test('tall-window batch tails keep a full route without duplicate future words or cool-down leaks',()=>{
+  const b=boot(new Map(),1424,928);b.g.now=()=>time;b.els.bEndless.onclick();let batches=1;
+  for(let i=0;i<80;i++){
+    const S=b.g.S,above=S.stakes.filter(s=>s.state==='live'&&s.y<S.cur.y);
+    assert.equal(above.length,b.g.AHEAD,'batch tail must not run out of scenery');assert.equal(new Set(above.map(s=>s.w.w)).size,above.length);
+    const t=b.g.currentFocus();assert.ok(t);assert.ok(b.g.record(t.w.w).correct<2,'must not use cooling words to fill the route');
+    const existing=above.map(s=>({s,x:s.x,y:s.y,w:s.w}));b.type(t.w.answer);b.frames();
+    existing.filter(r=>S.stakes.includes(r.s)).forEach(r=>{assert.equal(r.s.x,r.x);assert.equal(r.s.y,r.y);assert.equal(r.s.w,r.w)});
+    batches=Math.max(batches,S.batches);assert.ok(S.stakes.length<=b.g.AHEAD+5);
+  }
+  assert.ok(batches>=5);assert.equal(b.g.S.jumps,80);assert.ok(Object.values(b.g.state.words).every(r=>r.correct<=2));
+});
+test('camera catches up by landing without following the falling leg of the jump',()=>{
+  const b=boot(new Map(),1424,928);b.els.bEndless.onclick();b.type(b.g.currentFocus().w.answer);let cam=b.g.S.cam,guard=0;
+  while(b.g.S.jump&&guard++<60){b.frames(1);assert.ok(b.g.S.cam<=cam+.000001);assert.ok(cam-b.g.S.cam<20);cam=b.g.S.cam;}
+  const targetCam=b.g.S.robot.y-b.g.CH*b.g.ROBOT_AT;assert.ok(Math.abs(b.g.S.cam-targetCam)<45,'landing must not leave a long camera catch-up wait');
+  const next=b.g.currentFocus();b.type(next.w.answer);assert.ok(b.g.S.jump,'next jump must work immediately without waiting for camera');
+});
+test('preloaded future islands do not starve newly due third recalls in a tall window',()=>{
+  const b=boot(new Map(),1424,928);let at=time;b.g.now=()=>at;b.els.bEndless.onclick();const first=b.g.S.pool.map(w=>w.w);
+  for(let i=0;i<10;i++){b.type(b.g.currentFocus().w.answer);b.frames()}
+  at+=L.SHORT_GAP+1;let retrieved=false;
+  for(let i=0;i<30;i++){const t=b.g.currentFocus(),r=b.g.record(t.w.w),due=first.includes(t.w.w)&&r.correct===2&&r.due<=at;b.type(t.w.answer);b.frames();if(due){assert.equal(b.g.record(t.w.w).correct,3);retrieved=true;break;}}
+  assert.equal(retrieved,true,'fixed look-ahead must not starve due recalls');
+});
+test('slow rendering does not stretch a short jump into seconds of drifting',()=>{
+  const b=boot(new Map(),1424,928);b.els.bEndless.onclick();const target=b.g.currentFocus();b.type(target.w.answer);const duration=b.g.S.jump.dur;
+  b.g.update(.05,.20);assert.ok(b.g.S.jump);assert.ok(Math.abs(b.g.S.jump.t-.20*1000/duration)<.000001);
+  b.g.update(.05,.20);assert.equal(b.g.S.jump,null);assert.equal(b.g.S.cur,target);assert.equal(b.g.state.journey.jumps,1);
 });
 if(failures){console.error(failures+' check(s) failed.');process.exitCode=1}else console.log('All checks passed.');

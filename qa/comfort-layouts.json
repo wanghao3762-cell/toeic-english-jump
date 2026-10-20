@@ -1,0 +1,42 @@
+[
+  {
+    "buttonsRight": 175.1875,
+    "height": 600,
+    "keyboardBottom": 588,
+    "scrollHeight": 600,
+    "scrollWidth": 1024,
+    "stageBottom": 357,
+    "timerRight": 172,
+    "width": 1024
+  },
+  {
+    "buttonsRight": 191.1875,
+    "height": 720,
+    "keyboardBottom": 706,
+    "scrollHeight": 720,
+    "scrollWidth": 1280,
+    "stageBottom": 445,
+    "timerRight": 172,
+    "width": 1280
+  },
+  {
+    "buttonsRight": 191.1875,
+    "height": 900,
+    "keyboardBottom": 881,
+    "scrollHeight": 900,
+    "scrollWidth": 1440,
+    "stageBottom": 598,
+    "timerRight": 172,
+    "width": 1440
+  },
+  {
+    "buttonsRight": 432.1875,
+    "height": 1080,
+    "keyboardBottom": 1061,
+    "scrollHeight": 1080,
+    "scrollWidth": 1920,
+    "stageBottom": 778,
+    "timerRight": 413,
+    "width": 1920
+  }
+]

@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const read=name=>fs.readFileSync(path.join(root,name),'utf8').replace(/\r\n/g,'\n');
+const html=read('托业英语跳一跳.html');
+const scripts=[...html.matchAll(/<script>\n([\s\S]*?)\n<\/script>/g)].map(match=>match[1]);
+const names=['vocabulary.js','learning.js','ascent.js','memory.js','comfort.js','app.js'];
+const entryScripts=[...read('index.html').matchAll(/<script src="([^"?]+)\?v=([^"\s]+)"><\/script>/g)];
+assert.deepEqual(entryScripts.map(match=>match[1]),names,'all entry scripts need explicit cache versions');
+assert.equal(new Set(entryScripts.map(match=>match[2])).size,1,'entry script versions must agree');
+assert.equal(scripts.length,names.length);
+names.forEach((name,i)=>{new Function(scripts[i]);const source=read(name).replaceAll('</script','<'+String.fromCharCode(92)+'/script');assert.equal(scripts[i],source,name+' differs from offline export')});
+assert.ok(!/<script\s+src=/.test(html),'offline export has an external script');
+console.log('PASS: all 6 inline scripts match source, parse, and need no external scripts.');

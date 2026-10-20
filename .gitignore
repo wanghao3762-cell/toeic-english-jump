@@ -12,3 +12,12 @@ Thumbs.db
 
 # 独立仓库的参考项目，不随本项目入库
 汉字双拼跳一跳/
+
+# Local-only intermediate animation captures; final QA screenshots remain versioned.
+qa/jump-before*.png
+qa/jump-frame-*.png
+qa/jump-arc-*.png
+qa/jump-in-air.png
+qa/jump-landed.png
+qa/jump-takeoff.png
+qa/jump-after-tall.png
