@@ -2,6 +2,9 @@
 
 ## GitHub更新预检查（2026-10-20）
 
+- 已正常推送代码提交757766e，Pages构建状态built且commit精确匹配。线上index/6段脚本/词库JSON/中文离线HTML共9文件均200，规范换行后SHA256与本地一致。
+- 在线实际15跳、进入第2组、0→851米；舒适设置显示新的系统小跳说明，联想卡可用，error/warn为空，刷新后仍851米。记录qa/RELEASE_QA.md、qa/release-browser.json、qa/release-live.png。
+
 - 原origin为wanghao3762-cell/toeic-english-jump，main远端2726f6d；已确认公开仓库，Pages使用main根目录、legacy构建，线上HTTP200且text/html、无attachment下载头。
 - 本机Git Credential Manager已有可用授权，dry-run通过；未把聊天中暴露的凭据保存或写入URL。该凭据已提醒用户撤销，记录中不包含值。
 - 旧线上入口缺少comfort模块，确认仍是旧版。新入口6个脚本统一添加20261020-jump2版本参数，避免缓存混用；离线导出器兼容版本参数。
